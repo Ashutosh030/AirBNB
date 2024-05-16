@@ -1,0 +1,24 @@
+package com.airbnb.repository;
+
+import com.airbnb.entity.Property;
+import com.airbnb.entity.PropertyUser;
+import com.airbnb.entity.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+
+    //@Query("select r from Review r where r.property=:propertyId and r.propertyUser=:userId")
+    //Review findReviewByUserIdAndPropertyId (@Param("propertyId") long userId, @Param("userId") long PropertyId);
+
+    @Query("select r from Review r where r.property=:property and r.propertyUser=:user")
+    Review findReviewByUser(@Param("property") Property property, @Param("user") PropertyUser user);
+
+    //to get all the reviews given by a particular user->
+
+    List<Review> findByPropertyUser (PropertyUser user);
+
+}
